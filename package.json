@@ -1,0 +1,25 @@
+{
+  "name": "twisty-puzzles",
+  "version": "0.0.1",
+  "description": "Implementation of Twisty Puzzles",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node-dev src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitchell-merry/twisty-puzzles.git"
+  },
+  "author": "Mitchell Merry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mitchell-merry/twisty-puzzles/issues"
+  },
+  "homepage": "https://github.com/mitchell-merry/twisty-puzzles#readme",
+  "devDependencies": {
+    "ts-node": "^10.4.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.4"
+  }
+}
