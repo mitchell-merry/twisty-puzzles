@@ -91,6 +91,7 @@ export type Algorithm = Permutation[];
 export type NotationSet = Record<string, Permutation>;
 
 /* Generic Permutation Code */
+// TODO move out
 
 /**
  * Given a permutation, return the inverse permutation. I.e. P P' will do nothing.

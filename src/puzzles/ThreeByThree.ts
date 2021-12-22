@@ -43,6 +43,7 @@ export default class ThreeByThree extends Puzzle {
         this.state = [...Array(6).keys()].map(i => Array.from({length: 9}).map(_ => i+1)).flat();
     }
 
+    // Todo move out
     valueMapToConsoleColour: Record<number, string> = {
         1: "\x1b[47m", // white
         2: "\x1b[43m", // orange (yellow)
