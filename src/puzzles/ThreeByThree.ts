@@ -29,14 +29,28 @@ export default class ThreeByThree extends Puzzle {
         45, 46, 47, 48, 49, 50, 51, 52, 53
     ];
 
+    R: Permutation = [
+        0, 1, 20, 3, 4, 23, 6, 7, 26,
+        9, 10, 11, 12, 13, 14, 15, 16, 17,
+        18, 19, 47, 21, 22, 50, 24, 25, 53,
+        33, 30, 27, 34, 31, 28, 35, 32, 29,
+        8, 37, 38, 5, 40, 41, 2, 43, 44,
+        45, 46, 42, 48, 49, 39, 51, 52, 36
+    ];
+
     constructor() {
         super();
 
         this.notationSet = { 
             "U": this.U,
-            "U2": repeatPermutation(this.U, 2),
-            "U'": invertPermutation(this.U)
+            "R": this.R,
         };
+
+        // generate the variants
+        for(const [not, perm] of Object.entries(this.notationSet)) {
+            this.notationSet[not + "2"] = repeatPermutation(perm, 2);
+            this.notationSet[not + "'"] = invertPermutation(perm);
+        }
     }
 
     resetPuzzle(): void {
@@ -59,7 +73,7 @@ export default class ThreeByThree extends Puzzle {
         
         // Top face
         for(let i = 0; i < 3; i++) {
-            console.log(`      ${indexToChar(i*3)}${indexToChar(i*3+1)}${indexToChar(i*3+1)}`)
+            console.log(`      ${indexToChar(i*3)}${indexToChar(i*3+1)}${indexToChar(i*3+2)}`)
         }
 
         // Middle faces
@@ -79,7 +93,9 @@ export default class ThreeByThree extends Puzzle {
 
         // Bottom face
         for(let i = 0; i < 3; i++) {
-            console.log(`      ${indexToChar(5*9+i*3)}${indexToChar(5*9+i*3+1)}${indexToChar(5*9+i*3+1)}`)
+            console.log(`      ${indexToChar(5*9+i*3)}${indexToChar(5*9+i*3+1)}${indexToChar(5*9+i*3+2)}`)
         }
+
+        console.log();
     }
 }
