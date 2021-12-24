@@ -1,4 +1,4 @@
-import NByN from "./puzzles/NByN";
+import NByN, { X_AXIS, Y_AXIS, Z_AXIS } from "./puzzles/NByN";
 import ThreeByThree from "./puzzles/ThreeByThree"
 
 const JPERM = "R U R' F' R U R' U' R' F R2 U' R' U'";
@@ -11,4 +11,49 @@ const ZPERM = "M2 U M2 U M2 F2 M2 F2 U2"
 // cube.print();
 
 const nbyn = new NByN(5);
+nbyn.print();
+nbyn.turnSlice(X_AXIS, 3);
+nbyn.turnSlice(Y_AXIS, 3);
+nbyn.turnSlice(X_AXIS, 3);
+nbyn.turnSlice(X_AXIS, 3);
+nbyn.turnSlice(X_AXIS, 3);
+nbyn.turnSlice(Y_AXIS, 3);
+nbyn.turnSlice(Y_AXIS, 3);
+nbyn.turnSlice(Y_AXIS, 3);
+
+// nbyn.turnSlice(Z_AXIS, 0);
+// nbyn.turnSlice(X_AXIS, 0);
+// nbyn.turnSlice(Y_AXIS, 0);
+// nbyn.turnSlice(X_AXIS, 0);
+// nbyn.turnSlice(X_AXIS, 0);
+// nbyn.turnSlice(X_AXIS, 0);
+// nbyn.turnSlice(Y_AXIS, 0);
+// nbyn.turnSlice(Y_AXIS, 0);
+// nbyn.turnSlice(Y_AXIS, 0);
+// nbyn.turnSlice(Z_AXIS, 0);
+// nbyn.turnSlice(Z_AXIS, 0);
+// nbyn.turnSlice(Z_AXIS, 0);
+
+// nbyn.turnSlice(X_AXIS, 0);
+// nbyn.print();
+// nbyn.turnSlice(Y_AXIS, 0);
+// nbyn.turnSlice(Y_AXIS, 0);
+// nbyn.print();
+// nbyn.turnSlice(X_AXIS, 0);
+// nbyn.turnSlice(X_AXIS, 0);
+// nbyn.turnSlice(X_AXIS, 0);
+// nbyn.print();
+// nbyn.turnSlice(Y_AXIS, 0);
+// nbyn.turnSlice(Y_AXIS, 0);
+// nbyn.turnSlice(Y_AXIS, 0);
+// nbyn.print();
+// nbyn.turnSlice(X_AXIS, 0);
+// nbyn.print();
+// nbyn.turnSlice(Y_AXIS, 0);
+// nbyn.turnSlice(Y_AXIS, 0);
+// nbyn.turnSlice(Y_AXIS, 0);
+// nbyn.print();
+// nbyn.turnSlice(X_AXIS, 0);
+// nbyn.turnSlice(X_AXIS, 0);
+// nbyn.turnSlice(X_AXIS, 0);
 nbyn.print();
