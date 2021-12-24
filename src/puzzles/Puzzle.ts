@@ -1,3 +1,5 @@
+import { CyclicPermutation, Permutation, permute } from "../permutations/permute";
+
 /**
  * A twisty puzzle. Abstract class - should not be initialised.
  * 
@@ -26,8 +28,8 @@ export default class Puzzle {
      * 
      * @param notation The notation string to be performed.
      */
-    doNotation(notation: string): void {
-        this.doAlgorithm(this.notationToAlgorithm(notation));
+    doNotation(notation: string, _printEachStep: boolean = false): void {
+        this.doAlgorithm(this.notationToAlgorithm(notation), _printEachStep);
     }
 
     /**
@@ -53,9 +55,10 @@ export default class Puzzle {
      * 
      * @param alg The algorithm to perform.
      */
-    doAlgorithm(alg: Algorithm): void {
+    doAlgorithm(alg: Algorithm, _printEachStep: boolean = false): void {
         for(const P of alg) {
             this.permute(P);
+            if(_printEachStep) this.print();
         }
     }
 
@@ -76,11 +79,6 @@ export default class Puzzle {
 export type PuzzleState = number[];
 
 /**
- * Permutation on a puzzle. Example - turning the face of a 3x3 cube.
- */
-export type Permutation = number[];
-
-/**
  * Algorithm, i.e. a series of permutations.
  */
 export type Algorithm = Permutation[];
@@ -89,39 +87,3 @@ export type Algorithm = Permutation[];
  * Defines a set of notation for interpretation.
  */
 export type NotationSet = Record<string, Permutation>;
-
-/* Generic Permutation Code */
-// TODO move out
-
-/**
- * Given a permutation, return the inverse permutation. I.e. P P' will do nothing.
- * 
- * @param P The permutation to invert.
- */
-export function invertPermutation(P: Permutation): Permutation {
-    return [...P.keys()].map(i => P.indexOf(i));
-}
-
-/**
- * Repeats a permutation multiple times and returns the permutation that results. (e.g. instead of doing U -> U, do (U, 2))
- * 
- * @param P The permutation to repeat.
- */
-export function repeatPermutation(P: Permutation, timesToRepeat: number): Permutation {
-    let perm = [...P.keys()];
-
-    for(let i = 0; i < timesToRepeat; i++) perm = permute(perm, P);
-
-    return perm;
-}
-
-/**
- * Performs a permutation on an ordered list.
- * 
- * @param state List to perform the permutation on
- * @param P Permutation to perform
- * @returns Resulting permutation
- */
-export function permute(state: number[], P: Permutation): number[] {
-    return state.map((_, i) => state[P[i]]);
-}

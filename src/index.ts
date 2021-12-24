@@ -1,8 +1,13 @@
 import ThreeByThree from "./puzzles/ThreeByThree"
 
-const cube = new ThreeByThree();
+const JPERM = "R U R' F' R U R' U' R' F R2 U' R' U'";
+const SUPERFLIP = "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2";
+const CHECKERBOARD = "S2 I2 M2";
+
+const ZPERM = "M2 U M2 U M2 F2 M2 F2 U2"
+
+const cube = new ThreeByThree("L2 B2 D F2 D2 R2 F2 D2 L2 U B' L2 R F' D' U2 B2 D R");
 cube.print();
 
-// Sexy move
-cube.doNotation("R U R' U'");
 cube.print();
+
