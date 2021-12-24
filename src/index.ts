@@ -1,3 +1,4 @@
+import NByN from "./puzzles/NByN";
 import ThreeByThree from "./puzzles/ThreeByThree"
 
 const JPERM = "R U R' F' R U R' U' R' F R2 U' R' U'";
@@ -6,8 +7,8 @@ const CHECKERBOARD = "S2 I2 M2";
 
 const ZPERM = "M2 U M2 U M2 F2 M2 F2 U2"
 
-const cube = new ThreeByThree("L2 B2 D F2 D2 R2 F2 D2 L2 U B' L2 R F' D' U2 B2 D R");
-cube.print();
+// const cube = new ThreeByThree("L2 B2 D F2 D2 R2 F2 D2 L2 U B' L2 R F' D' U2 B2 D R");
+// cube.print();
 
-cube.print();
-
+const nbyn = new NByN(5);
+nbyn.print();

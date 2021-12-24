@@ -1,4 +1,5 @@
-import { CyclicPermutation, cyclicToRegular, invertPermutation, Permutation, repeatPermutation } from "../permutations/permute";
+import { CONSOLE_COL, CUBE_COLOURS } from "../helper/Colours";
+import { CyclicPermutation, cyclicToRegular, invertPermutation, Permutation, repeatPermutation } from "../helper/permute";
 import Puzzle, { NotationSet } from "./Puzzle";
 
 /**
@@ -104,22 +105,11 @@ export default class ThreeByThree extends Puzzle {
     }
 
     resetPuzzle(): void {
-        this.state = [...Array(6).keys()].map(i => Array.from({length: 9}).map(_ => i+1)).flat();
+        this.state = [...Array(6).keys()].map(i => Array.from({length: 9}).map(_ => i)).flat();
     }
 
-    // Todo move out
-    valueMapToConsoleColour: Record<number, string> = {
-        1: "\x1b[107m", // white (bright white)
-        2: "\x1b[43m", // orange (yellow)
-        3: "\x1b[102m", // green (bright green)
-        4: "\x1b[101m", // red (bright red)
-        5: "\x1b[104m", // blue (bright blue)
-        6: "\x1b[103m", // yellow (bright yellow)
-    }
-
-    // I'm just, so sorry, for what's about to happen...
     print(): void {
-        const indexToChar = (index: number) => `${this.valueMapToConsoleColour[this.state[index]]}  \x1b[0m`;
+        const indexToChar = (index: number) => `${CONSOLE_COL(CUBE_COLOURS[this.state[index]])}`;
         
         // Top face
         for(let i = 0; i < 3; i++) {

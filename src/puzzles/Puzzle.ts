@@ -1,4 +1,4 @@
-import { CyclicPermutation, Permutation, permute } from "../permutations/permute";
+import { CyclicPermutation, Permutation, permute } from "../helper/permute";
 
 /**
  * A twisty puzzle. Abstract class - should not be initialised.
@@ -9,19 +9,19 @@ export default class Puzzle {
     state!: PuzzleState;
     notationSet?: NotationSet;
 
-    constructor() {
-        this.resetPuzzle();
+    constructor(options: Record<string, any> = {}) {
+        this.resetPuzzle(options);
     }
 
     /**
      * Sets the state of the puzzle back to the default. Used for initialising the puzzle.
      */
-    resetPuzzle(): void { throw new Error("resetPuzzle must be initialised."); }
+    resetPuzzle(options: Record<string, any>): void { throw new Error("resetPuzzle must be initialised."); }
 
     /**
      * Prints the state of the puzzle to the console. Mostly used for debugging.
      */
-    print(): void { throw new Error("printPuzzle must be initialised.") }
+    print(): void { throw new Error("print must be initialised.") }
 
     /**
      * Performs the algorithm from the notation string directly. Utility function.
