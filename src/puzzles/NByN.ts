@@ -1,7 +1,7 @@
 import { CONSOLE_COL, CUBE_COLOURS, WHITE } from "../helper/Colours";
 import { Matrix, matrixMultiply } from "../helper/matrix";
 import { CyclicPermutation, cyclicPermute } from "../helper/permute";
-import Puzzle from "./Puzzle";
+import Puzzle, { NotationSet } from "./Puzzle";
 
 export type FaceCycle = CyclicPermutation;
 
@@ -55,12 +55,61 @@ export default class NByN extends Puzzle {
 
     // x, y, z, face
     cubies!: number[][][][];
+    notationSet: NotationSet<Turn>;
 
     constructor(N: number) {
         super({ N });
 
         this.N = N;
-        
+        this.notationSet = {
+            "R": { axis: X_AXIS, indexStart: 0, direction: true },
+            "U": { axis: Y_AXIS, indexStart: 0, direction: true },
+            "F": { axis: Z_AXIS, indexStart: 0, direction: true },
+            "L": { axis: X_AXIS, indexStart: N-1, direction: false },
+            "D": { axis: Y_AXIS, indexStart: N-1, direction: false },
+            "B": { axis: Z_AXIS, indexStart: N-1, direction: false }
+        }
+
+        for(const not in this.notationSet) {
+            const curTurn = this.notationSet[not];
+            this.notationSet[not + '\''] = { ...curTurn, direction: !curTurn.direction };
+            this.notationSet[not + '2'] = { ...curTurn, count: 2 }
+        }
+    }
+
+    doNotation(notation: string, _printEachStep: boolean = false): void { 
+        for(const not of notation.split(" ")) {
+            
+
+            let turn: Turn = this.notationSet[not];
+
+            this.turnSlices(turn.axis, 
+                turn.indexStart, 
+                turn.indexEnd ? turn.indexEnd : turn.indexStart, 
+                turn.direction,
+                turn.count ? turn.count : 1,
+            );
+            if(_printEachStep) this.print();
+        }
+    }
+
+    turnSlices(axis: AxisRotation, indexStart: number, indexEnd: number, direction = true, count = 1) {
+        if(indexStart < 0 || indexEnd >= this.N) throw new Error(`Index out of bounds. ${indexStart} - ${indexEnd}`);
+        for(let index = indexStart; index <= indexEnd; index++) {
+            this.turnSliceDirection(axis, index, direction, count);
+        }
+    }
+
+    turnSliceDirection(axis: AxisRotation, index: number, direction = true, count = 1) {
+        for(let c = 0; c < count; c++) {
+            this.turnSlice(axis, index);
+
+            // U' = U3
+            if(!direction) {
+                this.turnSlice(axis, index);
+                this.turnSlice(axis, index);
+            }
+        }
     }
 
     /**
@@ -202,4 +251,12 @@ export default class NByN extends Puzzle {
 
         console.log();
     }
+}
+
+interface Turn {
+    axis: AxisRotation;
+    indexStart: number;
+    indexEnd?: number;
+    direction: boolean;
+    count?: number;
 }

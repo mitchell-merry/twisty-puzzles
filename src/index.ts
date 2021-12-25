@@ -10,16 +10,26 @@ const ZPERM = "M2 U M2 U M2 F2 M2 F2 U2"
 // const cube = new ThreeByThree("L2 B2 D F2 D2 R2 F2 D2 L2 U B' L2 R F' D' U2 B2 D R");
 // cube.print();
 
-const nbyn = new NByN(2);
+const nbyn = new NByN(3);
 nbyn.print();
-nbyn.turnSlice(X_AXIS, 0);
-nbyn.turnSlice(Y_AXIS, 0);
-nbyn.turnSlice(X_AXIS, 0);
-nbyn.turnSlice(X_AXIS, 0);
-nbyn.turnSlice(X_AXIS, 0);
-nbyn.turnSlice(Y_AXIS, 0);
-nbyn.turnSlice(Y_AXIS, 0);
-nbyn.turnSlice(Y_AXIS, 0);
+
+nbyn.doNotation(SUPERFLIP, true);
+
+// j perm
+// nbyn.turnSlices(X_AXIS, 0, 0);
+// nbyn.turnSlices(Y_AXIS, 0, 0);
+// nbyn.turnSlices(X_AXIS, 0, 0, false);
+// nbyn.turnSlices(Z_AXIS, 0, 0, false);
+// nbyn.turnSlices(X_AXIS, 0, 0);
+// nbyn.turnSlices(Y_AXIS, 0, 0);
+// nbyn.turnSlices(X_AXIS, 0, 0, false);
+// nbyn.turnSlices(Y_AXIS, 0, 0, false);
+// nbyn.turnSlices(X_AXIS, 0, 0, false);
+// nbyn.turnSlices(Z_AXIS, 0, 0);
+// nbyn.turnSlices(X_AXIS, 0, 0, true, 2);
+// nbyn.turnSlices(Y_AXIS, 0, 0, false);
+// nbyn.turnSlices(X_AXIS, 0, 0, false);
+// nbyn.turnSlices(Y_AXIS, 0, 0, false);
 
 // nbyn.turnSlice(Z_AXIS, 0);
 // nbyn.turnSlice(X_AXIS, 0);
