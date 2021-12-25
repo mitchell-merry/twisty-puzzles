@@ -10,16 +10,16 @@ const ZPERM = "M2 U M2 U M2 F2 M2 F2 U2"
 // const cube = new ThreeByThree("L2 B2 D F2 D2 R2 F2 D2 L2 U B' L2 R F' D' U2 B2 D R");
 // cube.print();
 
-const nbyn = new NByN(5);
+const nbyn = new NByN(2);
 nbyn.print();
-nbyn.turnSlice(X_AXIS, 3);
-nbyn.turnSlice(Y_AXIS, 3);
-nbyn.turnSlice(X_AXIS, 3);
-nbyn.turnSlice(X_AXIS, 3);
-nbyn.turnSlice(X_AXIS, 3);
-nbyn.turnSlice(Y_AXIS, 3);
-nbyn.turnSlice(Y_AXIS, 3);
-nbyn.turnSlice(Y_AXIS, 3);
+nbyn.turnSlice(X_AXIS, 0);
+nbyn.turnSlice(Y_AXIS, 0);
+nbyn.turnSlice(X_AXIS, 0);
+nbyn.turnSlice(X_AXIS, 0);
+nbyn.turnSlice(X_AXIS, 0);
+nbyn.turnSlice(Y_AXIS, 0);
+nbyn.turnSlice(Y_AXIS, 0);
+nbyn.turnSlice(Y_AXIS, 0);
 
 // nbyn.turnSlice(Z_AXIS, 0);
 // nbyn.turnSlice(X_AXIS, 0);

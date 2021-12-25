@@ -69,6 +69,8 @@ export default class NByN extends Puzzle {
      * @param index The slice to turn, counting from the RUF faces.
      */
     turnSlice(axis: AxisRotation, index: number) {
+        if(index >= this.N) throw new Error("Index too large!");
+
         let newCubies = this.cubies.map(a => a.map(b => b.map(c => c.map(d => d))));
         // offset so the matrix rotation works
         let o = (this.N - 1)/2;
@@ -116,7 +118,6 @@ export default class NByN extends Puzzle {
 
         for(let z = N-1; z >= 0; z--) {
             for(let x = N-1; x >= 0; x--) {
-                console.log("yo")
                 this.cubies[x][0][z][0] = 1;
             }
         }
@@ -146,8 +147,6 @@ export default class NByN extends Puzzle {
                 this.cubies[x][N-1][z][5] = 6;
             }
         }
-
-        console.log(JSON.stringify(this.cubies));
     }
 
     print(): void {
