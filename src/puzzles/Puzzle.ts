@@ -26,6 +26,13 @@ export default class Puzzle {
      * @param notation The notation string to be performed.
      */
     doNotation(notation: string = "", _printEachStep: boolean = false): void { }
+
+    /**
+     * Performs a check to see if the puzzle is solved, and returns the result.
+     */
+    isSolved(): boolean {
+        throw new Error("isSolved must be initialized.");
+    }
 }
 
 /**

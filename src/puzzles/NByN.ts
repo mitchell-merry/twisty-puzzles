@@ -1,6 +1,7 @@
 import { CONSOLE_COL, CUBE_COLOURS, WHITE } from "../helper/Colours";
 import { Matrix, matrixMultiply } from "../helper/matrix";
 import { CyclicPermutation, cyclicPermute } from "../helper/permute";
+import { deepCopy } from "../helper/utility";
 import Puzzle, { NotationSet } from "./Puzzle";
 
 export type FaceCycle = CyclicPermutation;
@@ -55,6 +56,7 @@ export default class NByN extends Puzzle {
 
     // x, y, z, face
     cubies!: number[][][][];
+    solvedState!: number[][][][];
     notationSet: NotationSet<Turn>;
 
     constructor(N: number) {
@@ -136,7 +138,11 @@ export default class NByN extends Puzzle {
     doNotation(notation: string, _printEachStep: boolean = false): void { 
         for(const not of notation.split(" ")) {
             let turn: Turn = this.notationSet[not];
-            if(!turn) throw new Error(`Invalid notation detected! '${not}'`)
+            if(not === '' || !not) continue;
+            if(!turn) {
+                console.log("Invalid notation: '" + not + "'");
+                continue;
+            }
 
             this.turnSlices(turn.axis, 
                 turn.indexStart, 
@@ -193,15 +199,15 @@ export default class NByN extends Puzzle {
                 let rotatedCoord = matrixMultiply(axis.rotation, [ [coordinate.x-o], [coordinate.y-o], [coordinate.z-o] ]);
                 let c = { x: rotatedCoord[0][0]+o, y: rotatedCoord[1][0]+o, z: rotatedCoord[2][0]+o };
                 
-                newCubies[c.x][c.y][c.z] = this.cycleFaces(this.cubies[coordinate.x][coordinate.y][coordinate.z], axis.faceCycle);
+                newCubies[c.x][c.y][c.z] = cyclicPermute(this.cubies[coordinate.x][coordinate.y][coordinate.z], axis.faceCycle);
             }
         }
 
         this.cubies = newCubies;
     }
 
-    cycleFaces(faces: number[], faceCycle: FaceCycle): number[] {
-        return cyclicPermute(faces, faceCycle);
+    isSolved(): boolean {
+        return false;
     }
 
     resetPuzzle(options: Record<string, any>): void {
@@ -254,6 +260,8 @@ export default class NByN extends Puzzle {
                 this.cubies[x][N-1][z][5] = 6;
             }
         }
+
+        this.solvedState = deepCopy(this.cubies);
     }
 
     print(): void {
