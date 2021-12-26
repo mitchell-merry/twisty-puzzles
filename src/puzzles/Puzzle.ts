@@ -6,8 +6,6 @@ import { CyclicPermutation, Permutation, permute } from "../helper/permute";
  * @class Puzzle
  */
 export default class Puzzle {
-    // state!: PuzzleState;
-
     constructor(options: Record<string, any> = {}) {
         this.resetPuzzle(options);
     }
@@ -27,58 +25,8 @@ export default class Puzzle {
      * 
      * @param notation The notation string to be performed.
      */
-    doNotation(notation: string, _printEachStep: boolean = false): void { }
-
-    // /**
-    //  * Converts a notation string (e.g. "R U R' U'") to an algorithm form based off of notationSet.
-    //  * 
-    //  * @param notation The notation string.
-    //  * @returns The algorithm formed by the notation.
-    //  */
-    // notationToAlgorithm(notation: string): Algorithm {
-    //     let alg: Algorithm = [];
-
-    //     for(const not of notation.split(" ")) {
-    //         if(!this.notationSet?.[not]) throw new Error(`Invalid notation detected! ${not}`);
-            
-    //         alg.push(this.notationSet[not]);
-    //     }
-
-    //     return alg;
-    // }
-
-    // /**
-    //  * Performs the given algorithm on the puzzle, modifying its state.
-    //  * 
-    //  * @param alg The algorithm to perform.
-    //  */
-    // doAlgorithm(alg: Algorithm, _printEachStep: boolean = false): void {
-    //     for(const P of alg) {
-    //         this.permute(P);
-    //         if(_printEachStep) this.print();
-    //     }
-    // }
-
-    // /**
-    //  * Applies a permutation to the puzzle, reordering the elements of it.
-    //  * 
-    //  * @param P The permutation to apply to the puzzle.
-    //  */
-    // permute(P: Permutation): void {
-    //     this.state = permute(this.state, P) as PuzzleState;
-    // }
+    doNotation(notation: string = "", _printEachStep: boolean = false): void { }
 }
-
-/**
- * State of a puzzle. Dependent on the puzzle.
- * An ordered list representing the permutation of the elements on the puzzle.
- */
-// export type PuzzleState = number[];
-
-/**
- * Algorithm, i.e. a series of permutations.
- */
-// export type Algorithm = Permutation[];
 
 /**
  * Defines a set of notation for interpretation.

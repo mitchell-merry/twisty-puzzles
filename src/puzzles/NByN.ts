@@ -61,27 +61,82 @@ export default class NByN extends Puzzle {
         super({ N });
 
         this.N = N;
+        
+        // cube rotations - standard on every nxn
         this.notationSet = {
+            "x": { axis: X_AXIS, indexStart: 0, indexEnd: N-1, direction: true},
+            "y": { axis: Y_AXIS, indexStart: 0, indexEnd: N-1, direction: true},
+            "z": { axis: Z_AXIS, indexStart: 0, indexEnd: N-1, direction: true},
+        };
+
+        let faceTurns: NotationSet<Turn> = {
             "R": { axis: X_AXIS, indexStart: 0, direction: true },
             "U": { axis: Y_AXIS, indexStart: 0, direction: true },
             "F": { axis: Z_AXIS, indexStart: 0, direction: true },
             "L": { axis: X_AXIS, indexStart: N-1, direction: false },
             "D": { axis: Y_AXIS, indexStart: N-1, direction: false },
             "B": { axis: Z_AXIS, indexStart: N-1, direction: false }
+        };
+
+        // Slice moves on 3x3
+        if (N === 3) {
+            faceTurns["M"] = { ...faceTurns["L"], indexStart: 1 };
+            faceTurns["E"] = { ...faceTurns["D"], indexStart: 1 };
+            faceTurns["S"] = { ...faceTurns["F"], indexStart: 1 };
         }
 
+        for(const not in faceTurns) {
+            const curTurn = faceTurns[not];
+            this.notationSet[not] = curTurn; // copy base face turns to notation
+
+            // wide moves and slice moves
+            if(N > 2) {
+                // one in from the side
+                const wide = { ...curTurn };
+
+                if(wide.indexStart === 0) wide.indexEnd = wide.indexStart + 1;
+                else {
+                    wide.indexStart = wide.indexStart - 1;
+                    wide.indexEnd = N-1;
+                }
+
+                this.notationSet[not + "w"] = { ...wide }
+
+                // Rw = r on 3x3
+                if(N === 3) this.notationSet[not.toLowerCase()] = { ...wide };
+
+                // Rw = Rr on 4x4
+                // https://www.kewbz.co.uk/blogs/notations/4x4-cube-notations-guide-wca-official
+                if(N === 4) this.notationSet[not + not.toLowerCase()] = { ...wide };
+
+                // if(N > 4) {
+                //     // slice turns first
+                //     const sliceTurns: NotationSet<Turn> = {};
+                //     for(let i = 2; i <= N-1; i++) {
+                //         let slice = { ...curTurn };
+
+                //         if(slice.indexStart === 0) slice = { ...slice, indexStart: slice.indexStart + (i-1) };
+                //         else wide.indexStart = wide.indexStart - 1;
+
+                //         sliceTurns[`${i}${not}`] = slice;
+                //     }
+                // }
+            }
+        }
+
+        // Applying final counter-clockwise and halfturn variants
         for(const not in this.notationSet) {
             const curTurn = this.notationSet[not];
             this.notationSet[not + '\''] = { ...curTurn, direction: !curTurn.direction };
             this.notationSet[not + '2'] = { ...curTurn, count: 2 }
+            this.notationSet[not + '3'] = { ...curTurn, count: 3 } // I have seen this before, to specify a finger trick
         }
     }
 
     doNotation(notation: string, _printEachStep: boolean = false): void { 
         for(const not of notation.split(" ")) {
-            
-
             let turn: Turn = this.notationSet[not];
+            if(!turn) throw new Error(`Invalid notation detected! '${not}'`)
 
             this.turnSlices(turn.axis, 
                 turn.indexStart, 
@@ -89,6 +144,7 @@ export default class NByN extends Puzzle {
                 turn.direction,
                 turn.count ? turn.count : 1,
             );
+
             if(_printEachStep) this.print();
         }
     }
@@ -120,7 +176,9 @@ export default class NByN extends Puzzle {
     turnSlice(axis: AxisRotation, index: number) {
         if(index >= this.N) throw new Error("Index too large!");
 
+        // deep copy a 4d array lol
         let newCubies = this.cubies.map(a => a.map(b => b.map(c => c.map(d => d))));
+
         // offset so the matrix rotation works
         let o = (this.N - 1)/2;
 

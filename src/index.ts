@@ -1,5 +1,5 @@
-import NByN, { X_AXIS, Y_AXIS, Z_AXIS } from "./puzzles/NByN";
-import ThreeByThree from "./puzzles/ThreeByThree"
+import NByN from "./puzzles/NByN";
+import * as Console from "./examples/console";
 
 const JPERM = "R U R' F' R U R' U' R' F R2 U' R' U'";
 const SUPERFLIP = "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2";
@@ -7,63 +7,6 @@ const CHECKERBOARD = "S2 I2 M2";
 
 const ZPERM = "M2 U M2 U M2 F2 M2 F2 U2"
 
-// const cube = new ThreeByThree("L2 B2 D F2 D2 R2 F2 D2 L2 U B' L2 R F' D' U2 B2 D R");
-// cube.print();
+const OLL_PARITY_4x4 = "Rw U2 x Rw U2 Rw U2 Rw' U2 Lw U2 Rw' U2 Rw U2 Rw' U2 Rw'";
 
-const nbyn = new NByN(3);
-nbyn.print();
-
-nbyn.doNotation(SUPERFLIP, true);
-
-// j perm
-// nbyn.turnSlices(X_AXIS, 0, 0);
-// nbyn.turnSlices(Y_AXIS, 0, 0);
-// nbyn.turnSlices(X_AXIS, 0, 0, false);
-// nbyn.turnSlices(Z_AXIS, 0, 0, false);
-// nbyn.turnSlices(X_AXIS, 0, 0);
-// nbyn.turnSlices(Y_AXIS, 0, 0);
-// nbyn.turnSlices(X_AXIS, 0, 0, false);
-// nbyn.turnSlices(Y_AXIS, 0, 0, false);
-// nbyn.turnSlices(X_AXIS, 0, 0, false);
-// nbyn.turnSlices(Z_AXIS, 0, 0);
-// nbyn.turnSlices(X_AXIS, 0, 0, true, 2);
-// nbyn.turnSlices(Y_AXIS, 0, 0, false);
-// nbyn.turnSlices(X_AXIS, 0, 0, false);
-// nbyn.turnSlices(Y_AXIS, 0, 0, false);
-
-// nbyn.turnSlice(Z_AXIS, 0);
-// nbyn.turnSlice(X_AXIS, 0);
-// nbyn.turnSlice(Y_AXIS, 0);
-// nbyn.turnSlice(X_AXIS, 0);
-// nbyn.turnSlice(X_AXIS, 0);
-// nbyn.turnSlice(X_AXIS, 0);
-// nbyn.turnSlice(Y_AXIS, 0);
-// nbyn.turnSlice(Y_AXIS, 0);
-// nbyn.turnSlice(Y_AXIS, 0);
-// nbyn.turnSlice(Z_AXIS, 0);
-// nbyn.turnSlice(Z_AXIS, 0);
-// nbyn.turnSlice(Z_AXIS, 0);
-
-// nbyn.turnSlice(X_AXIS, 0);
-// nbyn.print();
-// nbyn.turnSlice(Y_AXIS, 0);
-// nbyn.turnSlice(Y_AXIS, 0);
-// nbyn.print();
-// nbyn.turnSlice(X_AXIS, 0);
-// nbyn.turnSlice(X_AXIS, 0);
-// nbyn.turnSlice(X_AXIS, 0);
-// nbyn.print();
-// nbyn.turnSlice(Y_AXIS, 0);
-// nbyn.turnSlice(Y_AXIS, 0);
-// nbyn.turnSlice(Y_AXIS, 0);
-// nbyn.print();
-// nbyn.turnSlice(X_AXIS, 0);
-// nbyn.print();
-// nbyn.turnSlice(Y_AXIS, 0);
-// nbyn.turnSlice(Y_AXIS, 0);
-// nbyn.turnSlice(Y_AXIS, 0);
-// nbyn.print();
-// nbyn.turnSlice(X_AXIS, 0);
-// nbyn.turnSlice(X_AXIS, 0);
-// nbyn.turnSlice(X_AXIS, 0);
-nbyn.print();
+Console.start();
