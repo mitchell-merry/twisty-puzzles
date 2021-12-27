@@ -56,7 +56,6 @@ export default class NByN extends Puzzle {
 
     // x, y, z, face
     cubies!: number[][][][];
-    solvedState!: number[][][][];
     notationSet: NotationSet<Turn>;
 
     constructor(N: number) {
@@ -147,8 +146,6 @@ export default class NByN extends Puzzle {
             if(not === '' || !not) continue;
             if(!turn) throw new Error("Invalid notation: '" + not + "'");
 
-            console.log(this.notationSet[not]);
-
             this.turnSlices(turn.axis, 
                 turn.indexStart, 
                 turn.indexEnd ? turn.indexEnd : turn.indexStart, 
@@ -230,43 +227,16 @@ export default class NByN extends Puzzle {
                 this.cubies[x].push([]);
                 for(let z = 0; z < N; z++) {
                     this.cubies[x][y].push([...Array(this.FACES).keys()].map(c => 0));
+
+                    if(y === 0) this.cubies[x][y][z][0] = 1;
+                    if(x === N-1) this.cubies[x][y][z][1] = 2;
+                    if(z === 0) this.cubies[x][y][z][2] = 3;
+                    if(x === 0) this.cubies[x][y][z][3] = 4;
+                    if(z === N-1) this.cubies[x][y][z][4] = 5;
+                    if(y === N-1) this.cubies[x][y][z][5] = 6;
                 }
             }
         }
-
-        for(let z = N-1; z >= 0; z--) {
-            for(let x = N-1; x >= 0; x--) {
-                this.cubies[x][0][z][0] = 1;
-            }
-        }
-
-        for(let y = 0; y < N; y++) {
-            for(let z = N-1; z >= 0; z--) {
-                this.cubies[N-1][y][z][1] = 2;
-            }
-
-            for(let x = N-1; x >= 0; x--) {
-                this.cubies[x][y][0][2] = 3;
-            }
-
-            // Right face - x = 0, face = 3, +z
-            for(let z = 0; z < N; z++) {
-                this.cubies[0][y][z][3] = 4;
-            }
-
-            // Back face - z = N-1, face = 4, -x
-            for(let x = 0; x < N; x++) {
-                this.cubies[x][y][N-1][4] = 5;
-            }
-        }
-
-        for(let z = 0; z < N; z++) {
-            for(let x = N-1; x >= 0; x--) {
-                this.cubies[x][N-1][z][5] = 6;
-            }
-        }
-
-        this.solvedState = deepCopy(this.cubies);
     }
 
     print(): void {
