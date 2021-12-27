@@ -92,37 +92,40 @@ export default class NByN extends Puzzle {
             this.notationSet[not] = curTurn; // copy base face turns to notation
 
             // wide moves and slice moves
-            if(N > 2) {
-                // one in from the side
-                const wide = { ...curTurn };
+            if(N >= 3) {
+                // slice turns first
+                for(let i = 2; i <= N-1; i++) {
+                    let slice = { ...curTurn };
 
-                if(wide.indexStart === 0) wide.indexEnd = wide.indexStart + 1;
-                else {
-                    wide.indexStart = wide.indexStart - 1;
-                    wide.indexEnd = N-1;
+                    if(slice.indexStart === 0) slice = { ...slice, indexStart: slice.indexStart + (i-1) };
+                    else slice.indexStart = slice.indexStart - (i-1);
+
+                    let wide = { ...slice };
+                    if(!wide.direction) wide.indexEnd = N-1;
+                    else {
+                        wide.indexEnd = wide.indexStart;
+                        wide.indexStart = 0;
+                    }
+
+                    this.notationSet[`${i}${not}`] = slice;
+                    this.notationSet[`${i}${not}w`] = wide;
                 }
 
-                this.notationSet[not + "w"] = { ...wide }
+                // Rw = 2Rw on all puzzles
+                this.notationSet[`${not}w`] = this.notationSet[`2${not}w`];
 
                 // Rw = r on 3x3
-                if(N === 3) this.notationSet[not.toLowerCase()] = { ...wide };
+                if(N === 3) this.notationSet[not.toLowerCase()] = this.notationSet[`${not}w`];
 
-                // Rw = Rr on 4x4
-                // https://www.kewbz.co.uk/blogs/notations/4x4-cube-notations-guide-wca-official
-                if(N === 4) this.notationSet[not + not.toLowerCase()] = { ...wide };
+                else if(N === 4) {
+                    // Rw = Rr on 4x4
+                    // https://www.kewbz.co.uk/blogs/notations/4x4-cube-notations-guide-wca-official
+                    this.notationSet[not + not.toLowerCase()] = this.notationSet[`${not}w`];
 
-                // if(N > 4) {
-                //     // slice turns first
-                //     const sliceTurns: NotationSet<Turn> = {};
-                //     for(let i = 2; i <= N-1; i++) {
-                //         let slice = { ...curTurn };
+                    // 2R = r
+                    this.notationSet[not.toLowerCase()] = this.notationSet[`2${not}`];
+                } 
 
-                //         if(slice.indexStart === 0) slice = { ...slice, indexStart: slice.indexStart + (i-1) };
-                //         else wide.indexStart = wide.indexStart - 1;
-
-                //         sliceTurns[`${i}${not}`] = slice;
-                //     }
-                // }
             }
         }
 
@@ -136,13 +139,15 @@ export default class NByN extends Puzzle {
     }
 
     doNotation(notation: string, _printEachStep: boolean = false): void { 
-        for(const not of notation.split(" ")) {
+        let notArray = notation.replace(/[(){}.\[\]]/g, "").split(" ");
+        console.log(notArray);
+
+        for(const not of notArray) {
             let turn: Turn = this.notationSet[not];
             if(not === '' || !not) continue;
-            if(!turn) {
-                console.log("Invalid notation: '" + not + "'");
-                continue;
-            }
+            if(!turn) throw new Error("Invalid notation: '" + not + "'");
+
+            console.log(this.notationSet[not]);
 
             this.turnSlices(turn.axis, 
                 turn.indexStart, 
