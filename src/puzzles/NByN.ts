@@ -4,15 +4,23 @@ import { CyclicPermutation, cyclicPermute } from "../helper/permute";
 import { deepCopy } from "../helper/utility";
 import Puzzle, { NotationSet } from "./Puzzle";
 
-export type FaceCycle = CyclicPermutation;
+type FaceCycle = CyclicPermutation;
 
-export interface AxisRotation {
+interface AxisRotation {
     rotation: Matrix;
     faceCycle: FaceCycle;
     axis: string; // denoting which axis to constrain in slice turning
 }
 
-export const X_AXIS: AxisRotation = {
+interface Turn {
+    axis: AxisRotation;
+    indexStart: number;
+    indexEnd?: number;
+    direction: boolean;
+    count?: number;
+}
+
+const X_AXIS: AxisRotation = {
     rotation: [
         [1, 0, 0],
         [0, 0, 1],
@@ -23,7 +31,7 @@ export const X_AXIS: AxisRotation = {
     
 }
 
-export const Y_AXIS: AxisRotation = {
+const Y_AXIS: AxisRotation = {
     rotation: [
         [0, 0, -1],
         [0, 1, 0],
@@ -33,7 +41,7 @@ export const Y_AXIS: AxisRotation = {
     axis: 'y'
 }
 
-export const Z_AXIS: AxisRotation = {
+const Z_AXIS: AxisRotation = {
     rotation: [
         [0, 1, 0],
         [-1, 0, 0],
@@ -44,7 +52,7 @@ export const Z_AXIS: AxisRotation = {
 }
 
 /**
- * Generic NxN cube.
+ * Generic NxNxN cube.
  * 
  * @class NByN
  * @extends {Puzzle}
@@ -183,9 +191,9 @@ export default class NByN extends Puzzle {
      */
     turnSlice(axis: AxisRotation, index: number) {
         if(index >= this.N) throw new Error("Index too large!");
+        if(index < 0) throw new Error("Index too small!");
 
-        // deep copy a 4d array lol
-        let newCubies = this.cubies.map(a => a.map(b => b.map(c => c.map(d => d))));
+        let newCubies = deepCopy(this.cubies);
 
         // offset so the matrix rotation works
         let o = (this.N - 1)/2;
@@ -292,12 +300,4 @@ export default class NByN extends Puzzle {
 
         console.log();
     }
-}
-
-interface Turn {
-    axis: AxisRotation;
-    indexStart: number;
-    indexEnd?: number;
-    direction: boolean;
-    count?: number;
 }
