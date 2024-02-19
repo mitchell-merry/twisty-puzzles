@@ -253,7 +253,7 @@ export default class NByN extends Puzzle {
         // I see potential for de-clutter!
         // Up face - y = 0, face = 0, -x, -z
         for(let z = this.N-1; z >= 0; z--) {
-            let toPrint = '  '.repeat(this.N);
+            let toPrint = ` ${'  '.repeat(this.N)}`;
 
             for(let x = this.N-1; x >= 0; x--) {
                 toPrint += colourAtCoords(x, 0, z, 0);
@@ -269,29 +269,32 @@ export default class NByN extends Puzzle {
             for(let z = this.N-1; z >= 0; z--) {
                 toPrint += colourAtCoords(this.N-1, y, z, 1);
             }
+            toPrint += ' ';
 
             // Front face - z = 0, face = 2, -x
             for(let x = this.N-1; x >= 0; x--) {
                 toPrint += colourAtCoords(x, y, 0, 2);
             }
+            toPrint += ' ';
 
             // Right face - x = 0, face = 3, +z
             for(let z = 0; z < this.N; z++) {
                 toPrint += colourAtCoords(0, y, z, 3);
             }
+            toPrint += ' ';
 
             // Back face - z = N-1, face = 4, -x
             for(let x = 0; x < this.N; x++) {
                 toPrint += colourAtCoords(x, y, this.N-1, 4);
             }
-            
-            
+            toPrint += ' ';
+
             console.log(toPrint);
         }
 
         // Bottom face - y = N-1, face = 5, -x, +z
         for(let z = 0; z < this.N; z++) {
-            let toPrint = '  '.repeat(this.N);
+            let toPrint = ` ${'  '.repeat(this.N)}`;
             for(let x = this.N-1; x >= 0; x--) {
                 toPrint += colourAtCoords(x, this.N-1, z, 5);
             }

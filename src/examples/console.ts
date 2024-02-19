@@ -3,6 +3,8 @@ const prompt = require('prompt');
 
 prompt.start();
 
+const END_MESSAGES = ['close', 'quit', 'done'];
+
 export const start = async (N?: number, scramble?: string) => {
     if(!N) N = parseInt((await prompt.get(['N']))['N'], 10);
     if(!scramble) scramble = (await prompt.get(['scramble']))['scramble'];
@@ -14,7 +16,7 @@ export const start = async (N?: number, scramble?: string) => {
 
     let startTime = (new Date().getTime());
     let n = (await prompt.get(['notation']))['notation'];
-    while(n !== 'close' && n !== 'done' && !cube.isSolved()) {
+    while(!END_MESSAGES.includes(n) && !cube.isSolved()) {
         try {
             cube.doNotation(n);
             solution += n + ' ';
